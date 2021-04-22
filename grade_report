@@ -1,0 +1,140 @@
+#include<iostream>
+#include<fstream>
+#include <cmath>
+#include <iomanip>
+#include <string>
+
+using namespace std;
+int i, j, n, m, id, grade;
+float arr[5], arrT[3], avg, testAvg, mark;
+float g1, g2, g3, g4, g5;
+string firstName, lastName;
+const string SPACE = " ";
+string name;
+float sum = 0;
+float GradeAverage(float arr[], int n) 
+{
+    int i;
+    for (i = 0; i < n; i++)
+        sum = sum + arr[i];
+    return (sum / n);
+}
+
+float TestAverage(float arrT[], int m)
+{
+    int j;
+    float sumT = 0;
+    for (j = 0; j < m; j++)
+        sumT = sumT + arrT[j];
+    return (sumT / m);
+}
+double average(double a[], double n)
+{
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += a[i];
+
+    return (double)sum / n;
+}
+
+
+const char* GetGrade(float arr[], int n) 
+{
+    cout << "\nGrade = ";
+    if (avg >= 90) {
+        cout << "A";
+    }
+    else if (avg < 90 && avg >= 80) {
+        cout << "B";
+    }
+    else if (avg < 85 && avg >= 65) {
+        cout << "C";
+    }
+    else if (avg < 65 && avg>45) {
+        cout << "D";
+    }
+    else {
+        cout << "Fail!";
+    }
+    return "";
+}
+
+int main()
+{
+
+    string line_;
+    ofstream file("Grade_Report.txt");
+    ifstream file_("CIT 1350.txt"); 
+    char grade;
+    while (file_ >> firstName >> lastName >> g1 >> g2 >> g3 >> g4 >> g5) {
+        double arry[] = { g1, g2, g3, g4, g5 };
+        double  no = sizeof(arr) / sizeof(arr[0]);
+        avg = average(arry, no);
+        if (avg >= 90 && avg <= 100) {
+            grade = 'A';
+        }
+        if (avg >= 80 && avg <= 89.9) {
+            grade = 'B';
+        }
+        if (avg >= 70 && avg <= 79.9) {
+            grade = 'C';
+        }
+        if (avg >= 60 && avg <= 69.9) {
+            grade = 'D';
+        }
+        if (avg < 59) {
+            grade = 'F';
+        }
+        cout << firstName << SPACE << lastName << SPACE << g1 << right << SPACE << g2 << right << SPACE << g3 << right << SPACE
+            << g4 << right << SPACE << g5 << right << SPACE << avg << right << SPACE << grade << endl;
+
+        file << firstName << SPACE << lastName << SPACE << g1 << right << SPACE << g2 << right << SPACE << g3 << right << SPACE
+            << g4 << right << SPACE << g5 << right << SPACE << avg << right << SPACE << grade << endl;
+
+
+    }
+    if (file_.is_open())
+    {
+
+        while (getline(file_, line_))
+        {
+
+            cout << line_ << '\n'; 
+        }
+
+        file_.close();
+
+        cout << "\nPlease enter number of tests taken by one student: ";
+        cin >> n; 
+        cout << "\nNow enter grade obtained in the " << n << " Tests: ";
+        for (i = 0; i < n; i++)
+            cin >> arr[i];
+
+        cout << "\nPlease enter number of students who took a particular test, e.g Test1: ";
+        cin >> m; 
+        cout << "\nNow enter test grades obtained by the " << m << " students: ";
+        for (j = 0; j < m; j++) {
+            cin >> arrT[j];
+        }
+
+        avg = GradeAverage(arr, n); 
+        testAvg = TestAverage(arrT, m);
+        file << '\n';
+        file << '\n';
+        file << "\nTest Average = " << testAvg;
+        file << "\n Student Average = " << avg;
+        file << '\n';
+        cout << "\n Student Average = " << avg;
+        cout << "\nTest Average = " << testAvg;
+
+        GetGrade(arr, n); 
+        cout << endl;
+        cout << "Wrote to file";
+
+    }
+    else {
+        cout << " File is not open" << '\n';
+    }
+    cin.get();
+    return 0;
+}  
